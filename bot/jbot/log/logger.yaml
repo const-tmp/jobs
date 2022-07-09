@@ -1,0 +1,51 @@
+version: 1
+disable_existing_loggers: false
+
+
+formatters:
+  debug:
+    format: "%(asctime)s\t[ %(levelname)s ]\t[ %(name)s:%(lineno)d ]\t%(message)s"
+    datefmt: "%d.%m.%y %H:%M:%S"
+  minimal:
+    format: "%(asctime)s\t-\t%(message)s"
+
+handlers:
+  debug:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: debug
+    stream: ext://sys.stdout
+
+  info:
+    class: logging.StreamHandler
+    level: INFO
+    formatter: minimal
+    stream: ext://sys.stdout
+
+  error:
+    class: logging.StreamHandler
+    level: WARNING
+    formatter: debug
+    stream: ext://sys.stderr
+
+root:
+  level: DEBUG
+  handlers: [ debug ]
+
+loggers:
+  asyncio:
+    level: INFO
+    handlers: [ debug ]
+    propagate: no
+  aiogram:
+    level: INFO
+    handlers: [ debug ]
+    propagate: no
+#  urllib3.connectionpool:
+#    level: ERROR
+#    handlers: [ debug ]
+#    propagate: no
+#  convertik.tg_bot.notifications:
+#    level: INFO
+#    handlers: [ debug ]
+#    propagate: no

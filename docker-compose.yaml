@@ -1,0 +1,39 @@
+version: '3.9'
+
+networks:
+  backend:
+
+volumes:
+  db_data:
+
+services:
+  db:
+    image: postgres:latest
+    env_file:
+      - .env
+    networks:
+      - backend
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  back:
+    restart: always
+    build:
+      context: back
+      dockerfile: Dockerfile
+    image: back:latest
+    env_file:
+      - .env
+    networks:
+      - backend
+
+  bot:
+    restart: always
+    build:
+      context: bot
+      dockerfile: Dockerfile
+    image: bot:latest
+    env_file:
+      - .env
+    networks:
+      - backend

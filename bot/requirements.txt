@@ -1,0 +1,6 @@
+click
+pyyaml
+python-dotenv
+aiogram
+grpcio
+grpcio-tools

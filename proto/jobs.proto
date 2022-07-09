@@ -1,0 +1,129 @@
+syntax = "proto3";
+package user;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./;proto";
+
+message Base {
+  uint64 id = 1;
+  google.protobuf.Timestamp created_at = 2;
+  google.protobuf.Timestamp updated_at = 3;
+  google.protobuf.Timestamp deleted_at = 4;
+}
+
+message City {
+  string name = 1;
+  Base base = 2;
+}
+
+message Cities {
+  repeated City cities = 1;
+}
+
+message User {
+  string name = 1;
+  string phone = 2;
+  string role = 3;
+  Base base = 4;
+}
+
+message Users {
+  repeated User users = 1;
+}
+
+message Profession {
+  string name = 1;
+  Base base = 2;
+}
+
+message Professions {
+  repeated Profession professions = 1;
+}
+
+
+message Skill {
+  string name = 1;
+  Base base = 2;
+}
+
+message Skills {
+  repeated Skill skills = 1;
+}
+
+message CV {
+  Base base = 1;
+  uint64 user_id = 2;
+  User user = 3;
+  string raw = 4;
+  string desc = 5;
+  uint64 city_id = 6;
+  City city = 7;
+  repeated Profession professions = 8;
+  repeated Skill skills = 9;
+  bool moderated = 10;
+  uint64 moderated_by = 11;
+}
+
+message CVs {
+  repeated CV cvs = 1;
+}
+
+message Ad {
+  Base base = 1;
+  uint64 user_id = 2;
+  User user = 3;
+  string raw = 4;
+  string desc = 5;
+  uint64 city_id = 6;
+  City city = 7;
+  repeated Profession professions = 8;
+  repeated Skill skills = 9;
+}
+
+message Ads {
+  repeated Ad ads = 1;
+}
+
+message IDRequest {
+  uint64 id = 1;
+}
+
+message SetPhoneRequest {
+  uint64 id = 1;
+  string phone = 2;
+}
+
+message Result {
+  bool ok = 1;
+}
+
+message EmptyRequest {}
+
+message GetUsersRequest {}
+
+service API {
+  rpc CreateUser(User) returns (User);
+  rpc GetUserByID(IDRequest) returns (User);
+  rpc GetAllUsers(User) returns (Users);
+  rpc SetPhone(SetPhoneRequest) returns (Result);
+  rpc GetOrCreateUser(User) returns (User);
+
+  rpc CreateCity(City) returns (City);
+  rpc GetOrCreateCity(City) returns (City);
+  rpc GetAllCities(EmptyRequest) returns (Cities);
+
+  rpc CreateSkill(Skill) returns (Skill);
+  rpc GetAllSkills(EmptyRequest) returns (Skill);
+
+  rpc CreateProfession(Profession) returns (Profession);
+  rpc GetAllProfessions(EmptyRequest) returns (Professions);
+
+  rpc CreateCV(CV) returns (CV);
+  rpc UpdateCV(CV) returns (CV);
+  rpc GetAllCVs(EmptyRequest) returns (CVs);
+  rpc GetCVByID(IDRequest) returns (CV);
+
+  rpc CreateAd(Ad) returns (Ad);
+  rpc GetAllAds(EmptyRequest) returns (Ads);
+}
