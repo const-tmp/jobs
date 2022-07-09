@@ -40,7 +40,7 @@ async def cmd_start(msg: Message):
             )
         )
 
-    await msg.answer(user)
+    # await msg.answer(user)
 
     match user.role:
         # case 'user':
