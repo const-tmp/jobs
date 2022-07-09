@@ -61,7 +61,3 @@ func (r *Repo) GetAllUsers() ([]User, error) {
 	}
 	return users, nil
 }
-
-func (r Repo) GetUserById(id uint64) (*User, error) {
-
-}
